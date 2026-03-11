@@ -987,6 +987,23 @@ struct GrabberUtilityWindowView: View {
 
     private var grabberHeader: some View {
         HStack(spacing: 10) {
+            HStack(spacing: 6) {
+                Button(action: {
+                    isCompactMode.toggle()
+                    if isCompactMode {
+                        resizeWindowToCompact()
+                    } else {
+                        resizeWindowToExpanded()
+                    }
+                }) {
+                    Circle()
+                        .fill(Color.blue)
+                        .frame(width: 12, height: 12)
+                }
+                .buttonStyle(.plain)
+                .help("切换小浮条")
+            }
+
             VStack(alignment: .leading, spacing: 2) {
                 Text("抓抓")
                     .font(.headline)
@@ -997,16 +1014,23 @@ struct GrabberUtilityWindowView: View {
 
             Spacer()
 
-            Button("切换小浮条") {
-                isCompactMode = true
-            }
-            .buttonStyle(.bordered)
-
             Button("最小化") {
                 GrabberWindowController.miniaturize()
             }
             .buttonStyle(.bordered)
         }
+    }
+
+    private func resizeWindowToCompact() {
+        guard let window = GrabberWindowController.window() else { return }
+        let newSize = NSSize(width: 252, height: 64)
+        window.setContentSize(newSize)
+    }
+
+    private func resizeWindowToExpanded() {
+        guard let window = GrabberWindowController.window() else { return }
+        let newSize = NSSize(width: 860, height: 620)
+        window.setContentSize(newSize)
     }
 
     private var compactBody: some View {
@@ -1029,6 +1053,7 @@ struct GrabberUtilityWindowView: View {
 
             floatingBarButton(title: "恢复", systemImage: "arrow.up.left.and.arrow.down.right") {
                 isCompactMode = false
+                resizeWindowToExpanded()
                 WindowActivationController.bringAppToFront(after: 0)
             }
             .help("恢复原窗口")
