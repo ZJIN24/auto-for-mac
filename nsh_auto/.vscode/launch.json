@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:nsh_auto}",
+            "name": "Debug MacClickStudio",
+            "target": "MacClickStudio",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug MacClickStudio"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:nsh_auto}",
+            "name": "Release MacClickStudio",
+            "target": "MacClickStudio",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release MacClickStudio"
+        }
+    ]
+}
