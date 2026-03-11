@@ -48,6 +48,9 @@ struct RGBAImage: Hashable {
         }
 
         let index = ((point.y * width) + point.x) * 4
+        guard index + 3 < bytes.count else {
+            return nil
+        }
         return PixelColor(
             red: Int(bytes[index]),
             green: Int(bytes[index + 1]),
@@ -319,12 +322,20 @@ struct TemplateMatcher {
             let templateIndex = ((offset.y * template.width) + offset.x) * 4
             let frameIndex = (((originY + offset.y) * frame.width) + (originX + offset.x)) * 4
 
+            guard templateIndex + 2 < template.bytes.count,
+                  frameIndex + 2 < frame.bytes.count else {
+                continue
+            }
+
             totalDifference += abs(Int(template.bytes[templateIndex]) - Int(frame.bytes[frameIndex]))
             totalDifference += abs(Int(template.bytes[templateIndex + 1]) - Int(frame.bytes[frameIndex + 1]))
             totalDifference += abs(Int(template.bytes[templateIndex + 2]) - Int(frame.bytes[frameIndex + 2]))
         }
 
         let maxDifference = Double(offsets.count * 255 * 3)
+        guard maxDifference > 0 else {
+            return 0
+        }
         return max(0, 1 - Double(totalDifference) / maxDifference)
     }
 }

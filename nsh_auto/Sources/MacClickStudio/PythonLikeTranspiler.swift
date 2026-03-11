@@ -90,6 +90,10 @@ struct PythonLikeTranspiler {
         let rawArguments = String(match.2)
         let arguments = rawArguments.split(separator: ",").map { normalizeExpression($0.trimmingCharacters(in: .whitespaces)) }
 
+        guard !arguments.isEmpty else {
+            throw StudioError.scriptError("第 \(line) 行 range 需要至少一个参数")
+        }
+
         switch arguments.count {
         case 1:
             return "for (let \(variable) = 0; \(variable) < \(arguments[0]); \(variable) += 1) {"

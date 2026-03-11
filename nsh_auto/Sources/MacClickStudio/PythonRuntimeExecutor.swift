@@ -438,7 +438,9 @@ def _execute_user_source(encoded_source):
         }
 
         process.waitUntilExit()
-        stdinPipe.fileHandleForWriting.closeFile()
+        try? stdinPipe.fileHandleForWriting.close()
+        try? stdoutPipe.fileHandleForReading.close()
+        try? stderrPipe.fileHandleForReading.close()
         readGroup.wait()
 
         guard process.terminationStatus == 0 else {

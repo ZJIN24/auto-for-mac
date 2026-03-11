@@ -56,7 +56,7 @@ struct AutomationService {
         usleep(20_000)
 
         for index in 1...steps {
-            let progress = CGFloat(index) / CGFloat(steps)
+            let progress = CGFloat(index) / CGFloat(max(steps, 1))
             let point = CGPoint(
                 x: startScreenPoint.x + ((endScreenPoint.x - startScreenPoint.x) * progress),
                 y: startScreenPoint.y + ((endScreenPoint.y - startScreenPoint.y) * progress)
