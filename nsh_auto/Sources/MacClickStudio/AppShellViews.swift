@@ -987,7 +987,7 @@ struct GrabberUtilityWindowView: View {
 
     private var grabberHeader: some View {
         HStack(spacing: 10) {
-            HStack(spacing: 6) {
+            HStack(spacing: 8) {
                 Button(action: {
                     isCompactMode.toggle()
                     if isCompactMode {
@@ -1002,6 +1002,16 @@ struct GrabberUtilityWindowView: View {
                 }
                 .buttonStyle(.plain)
                 .help("切换小浮条")
+
+                Button(action: {
+                    GrabberWindowController.miniaturize()
+                }) {
+                    Circle()
+                        .fill(Color.orange)
+                        .frame(width: 12, height: 12)
+                }
+                .buttonStyle(.plain)
+                .help("最小化")
             }
 
             VStack(alignment: .leading, spacing: 2) {
@@ -1013,11 +1023,6 @@ struct GrabberUtilityWindowView: View {
             }
 
             Spacer()
-
-            Button("最小化") {
-                GrabberWindowController.miniaturize()
-            }
-            .buttonStyle(.bordered)
         }
     }
 
